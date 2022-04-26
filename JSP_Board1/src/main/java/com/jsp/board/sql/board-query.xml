@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<!-- 글작성 -->
+	<entry key="write">
+		INSERT INTO BOARD(board_title, board_content, board_writer, board_pw, read_count, create_date, status_code) 
+		VALUES(
+			?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT
+		)
+	</entry>
+	
+
+
+
+
+</properties>
