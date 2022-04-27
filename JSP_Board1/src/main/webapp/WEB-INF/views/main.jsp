@@ -13,6 +13,15 @@
 	메인페이지
 	
 	<a href="board/list">게시판</a>
+	
+	<c:if test="${!empty sessionScope.message}">
+		<script type="text/javascript">
+			document.addEventListener( "DOMContentLoaded", function () {
+				alert("${message}");
+			});	
+		</script>
+		<c:remove var="message" scope="session"/>
+	</c:if>
 
 </body>
 </html>

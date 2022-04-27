@@ -19,6 +19,16 @@
 	<entry key="detail">
 		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, READ_COUNT, CREATE_DATE FROM BOARD WHERE BOARD_NO = ?		
 	</entry>
+	
+	<!-- 비밀번호 체크 -->
+	<entry key="checkPw">
+		SELECT COUNT(*) FROM BOARD WHERE BOARD_NO = ? AND BOARD_PW = ?		
+	</entry>
+	
+	<!-- 게시글 삭제 -->
+	<entry key="delete">
+		DELETE FROM BOARD WHERE BOARD_NO = ?		
+	</entry>
 
 
 

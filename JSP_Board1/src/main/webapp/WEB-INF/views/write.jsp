@@ -19,7 +19,7 @@
 
 			<h3>게시글 등록</h3>
 			<hr>
-			<form action="board/write" method="post">
+			<form action="write" method="post">
 				  
 				<div class="form-inline mb-2">
 					<label class="input-group-addon mr-3 insert-label">제목</label> 

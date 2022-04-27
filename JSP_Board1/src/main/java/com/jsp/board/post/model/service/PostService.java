@@ -49,12 +49,6 @@ public class PostService {
 		
 		Connection conn = getConnection();
 		List<Post> postList = dao.list(page, conn);
-		
-		if(postList == null) {
-			rollback(conn);
-		}else {
-			commit(conn);
-		}
 		close(conn);
 		return postList;
 	}
@@ -69,14 +63,42 @@ public class PostService {
 		
 		Connection conn = getConnection();
 		Post post = dao.detail(boardNo, conn);
-		
-		if(post == null) {
-			rollback(conn);
-		}else {
-			commit(conn);
-		}
 		close(conn);
 		return post;
+	}
+
+
+	/** 비밀번호 체크(조회)
+	 * @param boardNo
+	 * @param pw
+	 * @return result( 1 일치, 0 불일치 )
+	 * @throws Exception
+	 */
+	public int checkPw(int boardNo, String pw) throws Exception{
+
+		Connection conn = getConnection();
+		int result = dao.checkPw(boardNo, pw, conn);
+		close(conn);
+		return result;
+	}
+
+
+	/** 게시글 삭제하기
+	 * @param boardNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int delete(int boardNo) throws Exception{
+
+		Connection conn = getConnection();
+		int result = dao.delete(boardNo, conn);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 }

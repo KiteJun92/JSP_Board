@@ -124,6 +124,52 @@ public class PostDAO {
 		}
 		return post;
 	}
+
+	/** 비밀번호 체크(조회)
+	 * @param boardNo
+	 * @param pw
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int checkPw(int boardNo, String pw, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("checkPw");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			pstmt.setString(2, pw);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	/** 게시글 삭제
+	 * @param boardNo
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int delete(int boardNo, Connection conn) throws Exception{
+
+		int result = 0;
+		try {
+			String sql = prop.getProperty("delete");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 	

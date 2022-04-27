@@ -101,7 +101,7 @@ public class PostController extends HttpServlet{
 					}
 					
 					session.setAttribute("message",message);
-					resp.sendRedirect(req.getContextPath() + "/board/write");
+					resp.sendRedirect(req.getContextPath() + "/board/list");
 					
 				}
 				
@@ -112,11 +112,38 @@ public class PostController extends HttpServlet{
 				
 				
 				
+				
+				
+				
+				
 			}
 			// 삭제
 			else if(command.equals("delete")) {
 				
+				// 비밀번호 검사 메서드(service에서 수행) , 글 번호 + 비밀번호
+				int boardNo = Integer.parseInt(req.getParameter("no"));
+				String pw = req.getParameter("boardPw");
+				HttpSession session = req.getSession();
 				
+				int result = service.checkPw(boardNo, pw);
+				
+				if(result > 0) {
+					result = service.delete(boardNo);
+					if(result > 0) {
+						// 삭제 성공
+						message = "삭제되었습니다.";
+					}else {
+						message = "삭제 실패";
+					}
+					path = req.getContextPath() + "/board/list";
+				}else {
+					// 비밀번호가 틀렸습니다.
+					message = "비밀번호가 틀렸습니다.";
+					path = req.getContextPath() + "/board/detail?no=" + boardNo; 
+				}
+				
+				if(message != null) session.setAttribute("message", message);
+				resp.sendRedirect(path);
 				
 			}
 			

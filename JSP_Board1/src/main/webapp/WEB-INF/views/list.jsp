@@ -10,6 +10,8 @@
 </head>
 <body>
 
+
+	<button type="button" onclick="location.href='write'">글쓰기</button>
 	
 	<table>
 		<thead>
@@ -24,7 +26,7 @@
 		
 		<tbody>
 			<c:forEach var="post" items="${postList}">
-			<tr onclick="detail(${post.boardNo});" >
+			<tr onclick="detail(${post.boardNo});" style="cursor: pointer;" >
 					<td>${post.boardNo}</td>
 					<td>${post.boardTitle}</td>
 					<td>${post.boardWriter}</td>
@@ -36,7 +38,15 @@
 	</table>
 	<input type="hidden" name="page">
 	
-
+	
+	<c:if test="${!empty sessionScope.message}">
+		<script type="text/javascript">
+			document.addEventListener( "DOMContentLoaded", function () {
+				alert("${message}");
+			});	
+		</script>
+		<c:remove var="message" scope="session"/>
+	</c:if>
 	
 	<script type="text/javascript">
 			function detail(post_num){
