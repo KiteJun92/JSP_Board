@@ -10,6 +10,15 @@
 		)
 	</entry>
 	
+	<!-- 게시글 목록 조회 -->
+	<entry key="list">
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_WRITER, READ_COUNT, CREATE_DATE FROM BOARD LIMIT 10		
+	</entry>
+	
+	<!-- 게시글 상세 조회 -->
+	<entry key="detail">
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER, READ_COUNT, CREATE_DATE FROM BOARD WHERE BOARD_NO = ?		
+	</entry>
 
 
 

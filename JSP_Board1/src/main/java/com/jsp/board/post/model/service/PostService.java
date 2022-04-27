@@ -1,6 +1,7 @@
 package com.jsp.board.post.model.service;
 
 import java.sql.Connection;
+import java.util.List;
 
 import static com.jsp.board.common.JDBCTemplate.*; 
 import com.jsp.board.post.model.dao.PostDAO;
@@ -30,12 +31,52 @@ public class PostService {
 		
 		if(result > 0) {
 			commit(conn);
-			result = post.getBoardNo();
+//			result = post.getBoardNo();
 		}else {
 			rollback(conn);
 		}
-		
+		close(conn);
 		return result;
+	}
+
+
+	/** 목록 조회하기
+	 * @param page
+	 * @return postList
+	 * @throws Exception
+	 */
+	public List<Post> list(int page) throws Exception{
+		
+		Connection conn = getConnection();
+		List<Post> postList = dao.list(page, conn);
+		
+		if(postList == null) {
+			rollback(conn);
+		}else {
+			commit(conn);
+		}
+		close(conn);
+		return postList;
+	}
+
+
+	/** 상세 조회
+	 * @param boardNo
+	 * @return	post
+	 * @throws Exception
+	 */
+	public Post detail(int boardNo) throws Exception{
+		
+		Connection conn = getConnection();
+		Post post = dao.detail(boardNo, conn);
+		
+		if(post == null) {
+			rollback(conn);
+		}else {
+			commit(conn);
+		}
+		close(conn);
+		return post;
 	}
 
 }
