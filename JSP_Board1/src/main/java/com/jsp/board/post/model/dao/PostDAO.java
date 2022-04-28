@@ -191,6 +191,25 @@ public class PostDAO {
 		}
 		return result;
 	}
+
+	/** 조회수 증가
+	 * @param boardNo
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateReadCount(int boardNo, Connection conn) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("updateReadCount");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 }

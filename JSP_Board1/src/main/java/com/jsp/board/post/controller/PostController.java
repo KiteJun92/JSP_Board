@@ -64,11 +64,15 @@ public class PostController extends HttpServlet{
 				
 				int boardNo = Integer.parseInt(req.getParameter("no"));
 				
-				Post post = service.detail(boardNo);
+				int result = service.updateReadCount(boardNo);
+				if(result>0) {
+					Post post = service.detail(boardNo);
+					req.setAttribute("post", post);
+					req.getRequestDispatcher("/WEB-INF/views/detail.jsp").forward(req, resp);
+				}else {
+					System.out.println("조회수 오류 발생");
+				}
 				
-				
-				req.setAttribute("post", post);
-				req.getRequestDispatcher("/WEB-INF/views/detail.jsp").forward(req, resp);
 			}
 			// 등록
 			else if(command.equals("write")) {

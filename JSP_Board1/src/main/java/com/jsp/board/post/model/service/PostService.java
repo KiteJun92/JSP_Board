@@ -116,4 +116,21 @@ public class PostService {
 		return result;
 	}
 
+
+	/** 조회수 증가
+	 * @param boardNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateReadCount(int boardNo) throws Exception{
+		Connection conn = getConnection();
+		int result = dao.updateReadCount(boardNo, conn);
+		if(result > 0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
+
 }
