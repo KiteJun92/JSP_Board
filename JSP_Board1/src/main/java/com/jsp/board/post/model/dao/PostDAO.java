@@ -170,8 +170,27 @@ public class PostDAO {
 		}
 		return result;
 	}
-	
-	
+
+	/** 게시글 수정
+	 * @param post
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int update(Post post, Connection conn) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("update");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, post.getBoardTitle());
+			pstmt.setString(2, post.getBoardContent());
+			pstmt.setInt(3, post.getBoardNo());
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 }

@@ -107,12 +107,46 @@ public class PostController extends HttpServlet{
 				
 				
 			}
-			// 수정
+			// 수정 페이지 이동
+			else if(command.equals("updatePage")) {
+				int boardNo = Integer.parseInt(req.getParameter("no"));
+				String pw = req.getParameter("boardPw");
+				HttpSession session = req.getSession();
+				
+				int result = service.checkPw(boardNo, pw);
+				if(result > 0) {
+					Post post = service.detail(boardNo);
+					req.setAttribute("post", post);
+					path="/WEB-INF/views/update.jsp";
+					req.getRequestDispatcher(path).forward(req, resp);
+				}else {
+					message = "비밀번호가 일치하지 않습니다.";
+					path = req.getContextPath() + "/board/detail?no=" + boardNo;
+					session.setAttribute("message", message);
+					resp.sendRedirect(path);
+				}
+			}
+			// 수정 실행
 			else if(command.equals("update")) {
 				
+				Post post = new Post();
+				HttpSession session = req.getSession();
 				
+				// update.jsp 에서 parameter 받아와서 post에 담기 
+				post.setBoardNo(Integer.parseInt(req.getParameter("boardNo")));
+				post.setBoardTitle(req.getParameter("boardTitle"));
+				post.setBoardContent(req.getParameter("boardContent"));
 				
+				int result = service.update(post);
 				
+				if(result > 0) {
+					message = "수정 성공!";
+				}else {
+					message = "수정 실패!";
+				}
+				
+				session.setAttribute("message",message);
+				resp.sendRedirect(req.getContextPath() + "/board/list");
 				
 				
 				

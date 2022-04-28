@@ -101,4 +101,19 @@ public class PostService {
 		return result;
 	}
 
+
+	/** 게시글 수정
+	 * @param post
+	 * @return result
+	 * @throws Exception
+	 */
+	public int update(Post post) throws Exception{
+		Connection conn = getConnection();
+		int result = dao.update(post, conn);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

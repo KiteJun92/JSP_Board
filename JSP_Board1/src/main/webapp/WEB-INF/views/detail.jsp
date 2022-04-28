@@ -36,16 +36,14 @@
 				<div>
 					<label for="content">내용</label>
 				</div>
-				<textarea readonly class="form-control" id="boardContent" name="boardContent" rows="15" style="resize: none; outline: none">
-					${post.boardContent}
-				</textarea>
+				<textarea readonly class="form-control" id="boardContent" name="boardContent" rows="15" style="resize: none; outline: none">${post.boardContent}</textarea>
 			</div>
 
 
 			<hr class="mb-4">
 
 			<div class="text-center">
-				<button type="button" class="btn btn-primary">수정</button>
+				<button id="updateBtn" type="button" class="btn btn-primary">수정</button>
 				<button id="deletBtn" type="button" class="btn btn-primary">삭제</button>
 				<button type="button" class="btn btn-primary" onclick="location.href='list'">목록으로</button>
 			</div>
@@ -56,21 +54,36 @@
 			<input type="hidden" id="boardNum" name="no" value="${post.boardNo}">
 			<input type="hidden" id="boardPass" name="boardPw" value="${post.boardPw}">
 		</form>
+		<form id="updateForm" action='updatePage' method="POST">
+			<input type="hidden" id="boardNum2" name="no" value="${post.boardNo}">
+			<input type="hidden" id="boardPass2" name="boardPw" value="${post.boardPw}">
+		</form>
 
 	<!-- Bootstrap 4 JS -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 	
 	<script>
+		
 		document.querySelector("#deletBtn").addEventListener("click", () => {
 			const boardNo = ${post.boardNo};
 			let checkPw = prompt("비밀번호를 입력해주세요");
 			
 			document.querySelector("#boardPass").value = checkPw;
 			document.querySelector("#boardNum").value = boardNo;
-
 			document.querySelector("#deleteForm").submit();
 		});
+		
+		document.querySelector("#updateBtn").addEventListener("click", () => {
+			const boardNo = ${post.boardNo};
+			let checkPw = prompt("비밀번호를 입력해주세요");
+			
+			document.querySelector("#boardPass2").value = checkPw;
+			document.querySelector("#boardNum2").value = boardNo;
+			document.querySelector("#updateForm").submit();
+		});
+		
+		
 	</script>
 	
 	<c:if test="${!empty sessionScope.message}">
